@@ -1,7 +1,7 @@
 ---
 title: Extending OSCAL Models with Props and Links
 description: A tutorial on extending OSCAL models by using props and links.
-weight: 5
+weight: 10
 suppresstopiclist: true
 toc:
   enabled: true
