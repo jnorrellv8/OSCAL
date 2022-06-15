@@ -411,7 +411,7 @@ We have now covered all required and recommended fields of the metadata section,
     <version>1.0.0<version>
     <oscal-version>1.0.4</oscal-version>
   </metadata>
-  ...
+  …
 </catalog>
 {{< /highlight >}}
 {{% /tab %}}
@@ -468,15 +468,15 @@ In OSCAL we use a document identifier to identify that a document is a member of
     <last-modified>2021-01-05T00:00:00-5:00</last-modified>
     <version>1.0.0<version>
     <oscal-version>1.0.4</oscal-version>
-    <document-id scheme="https://www.doi.org/">10.1000/182</document-id>
+    <document-id scheme="http://www.doi.org/">10.1000/182</document-id>
   </metadata>
-  ...
+  …
 </catalog>
 {{< /highlight >}}
 
 In the above example, OSCAL we add a `<document-id>` to track the "Document Series" identified by the [Digital Object Identifier](https://www.doi.org/driven_by_DOI.html) (DOI) System using the identifier `10.1000/182`.
 
-The DOI System is indicated using the `@scheme` attribute value `https://www.doi.org/`, which is standardized in OSCAL ([XML](/reference/latest/complete/xml-definitions/#/field/oscal-metadata/document-id/scheme), [JSON/YAML](/reference/latest/complete/json-definitions/#/field/oscal-metadata/document-id/scheme)). A schema is required to be a [URI](/reference/datatypes/#uri).
+The DOI System is indicated using the `@scheme` attribute value `http://www.doi.org/`, which is standardized in OSCAL ([XML](/reference/latest/complete/xml-definitions/#/field/oscal-metadata/document-id/scheme), [JSON/YAML](/reference/latest/complete/json-definitions/#/field/oscal-metadata/document-id/scheme)). A schema is required to be a [URI](/reference/datatypes/#uri).
 {{% /tab %}}
 {{% tab %}}
 {{< highlight json "linenos=table" >}}
@@ -491,7 +491,7 @@ The DOI System is indicated using the `@scheme` attribute value `https://www.doi
       "oscal-version": "1.0.4",
       "document-ids": [
         {
-          "scheme": "https://www.doi.org/",
+          "scheme": "http://www.doi.org/",
           "value": "10.1000/182"
         }
       ]
@@ -502,7 +502,7 @@ The DOI System is indicated using the `@scheme` attribute value `https://www.doi
 
 In the above example, OSCAL we add an object to the `document-ids` array to track the "Document Series" identified by the [Digital Object Identifier](https://www.doi.org/driven_by_DOI.html) (DOI) System using the identifier `10.1000/182`.
 
-The DOI System is indicated using the `scheme` property value `https://www.doi.org/`, which is standardized in OSCAL ([XML](/reference/latest/complete/xml-definitions/#/field/oscal-metadata/document-id/scheme), [JSON/YAML](/reference/latest/complete/json-definitions/#/field/oscal-metadata/document-id/scheme)). A schema is required to be a [URI](/reference/datatypes/#uri).
+The DOI System is indicated using the `scheme` property value `http://www.doi.org/`, which is standardized in OSCAL ([XML](/reference/latest/complete/xml-definitions/#/field/oscal-metadata/document-id/scheme), [JSON/YAML](/reference/latest/complete/json-definitions/#/field/oscal-metadata/document-id/scheme)). A schema is required to be a [URI](/reference/datatypes/#uri).
 {{% /tab %}}
 {{% tab %}}
 {{< highlight yaml "linenos=table" >}}
@@ -516,13 +516,13 @@ catalog:
     version: 1.0.0
     oscal-version: 1.0.4
     document-ids:
-    - scheme: https://www.doi.org/
+    - scheme: http://www.doi.org/
       value: 10.1000/182
 {{< /highlight >}}
 
 In the above example, OSCAL we add an object to the `document-ids` list to track the "Document Series" identified by the [Digital Object Identifier](https://www.doi.org/driven_by_DOI.html) (DOI) System using the identifier `10.1000/182`.
 
-The DOI System is indicated using the `scheme` property value `https://www.doi.org/`, which is standardized in OSCAL ([XML](/reference/latest/complete/xml-definitions/#/field/oscal-metadata/document-id/scheme), [JSON/YAML](/reference/latest/complete/json-definitions/#/field/oscal-metadata/document-id/scheme)). A schema is required to be a [URI](/reference/datatypes/#uri).
+The DOI System is indicated using the `scheme` property value `http://www.doi.org/`, which is standardized in OSCAL ([XML](/reference/latest/complete/xml-definitions/#/field/oscal-metadata/document-id/scheme), [JSON/YAML](/reference/latest/complete/json-definitions/#/field/oscal-metadata/document-id/scheme)). A schema is required to be a [URI](/reference/datatypes/#uri).
 {{% /tab %}}
 {{% /tabs %}}
 
@@ -591,138 +591,123 @@ This completes defining the marking property.
 
 #### Links
 
-{{< tabs XML JSON YAML >}}
-{{% tab %}}
-Alongside the `<prop>` element, `<link>` is a way of providing additional information in the metadata section that is not covered by the other elements. Each `<link>` must contain a single `@href` attribute, which contains a resolvable URI. Each `<link>` should also include a `@rel` attribute, which describes the type of relationship provided by the `@href`.  
+Alongside properties, links are another way of providing additional information in the metadata section that is not covered by the other fields. Links are a means to establish a relationship between an OSCAL object and another OSCAL objects or web resource.
 
 {{% callout note %}}
 The [Props and Links tutorial](/learn/tutorials/extensions/#links) provides comprehensive examples of how to implement a `<link>`.
 {{% /callout %}}
 
-For this example, we will create a "latest-version" link, which provides a static link to the latest version of this Document Series. By pointing to a static URL, but updating the contents of that URL as the document is updated, any user that has an old version of the document can quickly and easily update.
+The following example illustrates how to establish a `latest-version` link to the latest version of the OSCAL document. This link will reference a static URL whose contents can be updated to reflect the latest revision of the document, which makes it easy for consumers to quickly and easily update their content.
 
+{{< tabs XML JSON YAML >}}
+{{% tab %}}
 {{< highlight xml "linenos=table" >}}
 <link rel="latest-version"
       href="https://www.example.com/catalog/exampleoscalcatalog/latest"/>
 {{< /highlight >}}
 
-The "predecessor-version" and "successor-version" links could be used in tandem with the above to create a navigable web of document versions.
-
-By using other custom `@rel` values, any relevant or related resource can be described and linked to in the OSCAL document's metadata section.
-
+The `@rel` attribute establishes `latest-version` as the type of relationship. The  `@href` attribute provides a URI that can be used to access, also called "resolve", the associated resource.
 {{% /tab %}}
-
 {{% tab %}}
-Alongside the `props` array, the `links` array is a way of providing additional information in the Metadata section that is not covered by the other fields. Each object inside the `links` array must contain a single `href` field, which contains a resolvable URI. Each object should also include a `rel` field, which describes the type of relationship provided by the `href`. 
-
-{{% callout note %}}
-The [Props and Links tutorial](/learn/tutorials/extensions/#links) provides comprehensive examples of how to implement a `link`.
-{{% /callout %}}
-
-For this example, we will create a "latest-version" link, which provides a static link to the latest version of this Document Series. By pointing to a static URL, but updating the contents of that URL as the document is updated, any user that has an old version of the document can quickly and easily update.
-
 {{< highlight json "linenos=table" >}}
 {  
   "links": [
     {
-    "rel":"latest-version",
-    "href":"https://www.example.com/catalog/example-oscal-catalog/latest"
+      "rel": "latest-version",
+      "href": "https://www.example.com/catalog/example-oscal-catalog/latest"
     }
   ]
 }
 {{< /highlight >}}
 
-The "predecessor-version" and "successor-version" links could be used in tandem with the above to create a navigable web of document versions.
-
-By using other custom `rel` values, any relevant or related resource can be described and linked to in the OSCAL document's metadata section.
-
+By adding a new object to the `links` array property, the `rel` field establishes `latest-version` as the type of relationship. The  `href` field provides a URI that can be used to access, also called "resolve", the associated resource.
 {{% /tab %}}
-
 {{% tab %}}
-Alongside the `props` array, the `links` array is way of providing additional information in the Metadata section that is not covered by the other fields. Each object inside the `links` array must contain a single `href` field, which contains a resolvable URI. Each object should also include a `rel` field, which describes the type of relationship provided by the `href`. 
-
-{{% callout note %}}
-The [Props and Links tutorial](/learn/tutorials/extensions/#links) provides comprehensive examples of how to implement a `link`.
-{{% /callout %}}
-
-For this example, we will create a "latest-version" link, which provides a static link to the latest version of this Document Series. By pointing to a static URL, but updating the contents of that URL as the document is updated, any user that has an old version of the document can quickly and easily update.
-
 {{< highlight yaml "linenos=table" >}}
-  links:
-  - rel: latest-version
-    href: https://www.example.com/catalog/example-oscal-catalog/latest
+links:
+- rel: latest-version
+  href: https://www.example.com/catalog/example-oscal-catalog/latest
 {{< /highlight >}}
 
-The "predecessor-version" and "successor-version" links could be used in tandem with the above to create a navigable web of document versions.
-
-By using other custom `rel` values, any relevant or related resource can be described and linked to in the OSCAL document's metadata section.
-
+By adding a new item to the `links` list, `rel` field establishes `latest-version` as the type of relationship. The  `href` field provides a URI that can be used to access, also called "resolve", the associated resource.
 {{% /tab %}}
 {{% /tabs %}}
 
+The `predecessor-version` and `successor-version` link relationships can be used in tandem with the above to create a navigable web of document versions. By using these and other custom relationship values, any relevant or related resource can be described and linked to in the OSCAL document's metadata section.
+
 ### Using Other Optional Fields
+
+The remainder of this tutorial will briefly cover the other optional objects inside the metadata section. While not required by the specification, these objects provide invaluable information, particularly around the provenance and authorship of the data contained in an OSCAL document, or to define referencable roles, locations, or parties. This information is declared in the metadata section, and is often passed by-reference to other parts of the OSCAL document or other OSCAL documents importing that document. Each object can be clicked to get additional information.
 
 {{< tabs XML JSON YAML >}}
 {{% tab %}}
+- [`<role>`](/reference/latest/catalog/xml-reference/#/catalog/metadata/role) - Roles define some function or purpose that is to be assigned to some entity later in the document. Role elements have an `id` attribute with a [NCName](/reference/datatypes/#ncname) that is used to reference the role elsewhere in the OSCAL document. A number of pre-defined roles exist in OSCAL, but differ depending on context.
 
-The remainder of this tutorial briefly covers the other optional elements inside the metadata section. While not required by the specification, these elements provide invaluable information, particularly for provenance and authorship data. This information is declared in the metadata section, and is often passed by-reference to other parts of the OSCAL document. Each element can be clicked to get additional information.
+  In the metadata section they are as follows:
 
-[`<role>`](/reference/latest/catalog/xml-reference/#/catalog/metadata/role) - Roles define some function or purpose that is to be assigned to some entity later in the document. Role elements have an `id` attribute with a [NCName](/reference/datatypes/#ncname) that is used to reference the role elsewhere in the OSCAL document. A number of pre-defined roles exist in OSCAL, but differ depending on context. In the metadata section they are as follows:
+  - **creator:** Indicates the organization or person that created this content.
+  - **prepared-by:** Indicates the organization or person that created this content.
+  - **prepared-for:** Indicates the organization or person for which this content was created.
+  - **content-approver:** Indicates the organization or person responsible for all content represented in the "document".
+  - **contact:** Indicates the organization or person to contact for questions or support related to this content.
 
-- prepared-by: Indicates the organization that created this content.
-- prepared-for: Indicates the organization for which this content was created.
-- content-approver: Indicates the organization responsible for all content represented in the "document".
-Other roles can be locally defined by the content creator.
+  Other roles can be locally defined by the content creator.
 
-[`<location>`](/reference/latest/catalog/xml-reference/#/catalog/metadata/location) - Geographic data defined by a street address. Locations have a `@uuid` attribute that allow them to be referenced elsewhere in the OSCAL document. Includes elements to describe a variety of data describing the location in question.
+- [`<location>`](/reference/latest/catalog/xml-reference/#/catalog/metadata/location) - Geographic data associated with a street, mailing, or email address, or phone number. Locations have a `@uuid` attribute that allow them to be referenced elsewhere in the OSCAL document. Includes elements to describe a variety of data describing the location in question.
 
-[`<party>`](/reference/latest/catalog/xml-reference/#/catalog/metadata/party) - Defines some entity, either a person or an organization. Has a `@uuid` attribute that allows for references to this party elsewhere in the OSCAL document. Includes elements to describe a variety of data describing the party in question, including a location uuid.
+- [`<party>`](/reference/latest/catalog/xml-reference/#/catalog/metadata/party) - Defines some entity, either a person or an organization. Has a `@uuid` attribute that allows for references to this party elsewhere in the OSCAL document. Includes elements to describe a variety of data describing the party in question, including a location uuid.
 
-[`<responsible-party>`](/reference/latest/catalog/xml-reference/#/catalog/metadata/responsible-party) - Explicitly declares a party that is responsible for a given role. The `@role-id` attribute references the role that the party is fulfilling, and is either a custom role locally defined or one of the core-defined roles; see the `<role>` section above for details. Uses a party's uuid to link the given role to the given party.
+- [`<responsible-party>`](/reference/latest/catalog/xml-reference/#/catalog/metadata/responsible-party) - Explicitly declares a party that is responsible for a given role relative to the document. The `@role-id` attribute references the role that the party is fulfilling, and is either a custom role locally defined or one of the core-defined roles; see the `<role>` section above for details. Uses a party's uuid to link the given role to the given party.
 
-[`<remarks>`]((/reference/latest/catalog/xml-reference/#/catalog/metadata/remarks)) - [Markup](/reference/datatypes/#markup-data-types) formatted plaintext with notes and remarks regarding the metadata section of this document.
+- [`<remarks>`]((/reference/latest/catalog/xml-reference/#/catalog/metadata/remarks)) - [markup-multiline](/reference/datatypes/#markup-data-types) formatted text providing notes and comments regarding the document.
+{{% /tab %}}
+{{% tab %}}
+
+- [`roles`](/reference/latest/catalog/json-reference/#/catalog/metadata/roles) - An array of Role objects. Roles define some function or purpose that is to be assigned to some entity later in the document. Role objects have an `id` field with a [NCName](/reference/datatypes/#ncname) that is used to reference the role elsewhere in the OSCAL document. A number of pre-defined roles exist in OSCAL, but differ depending on context.
+
+  In the metadata section they are as follows:
+
+  - **creator:** Indicates the organization or person that created this content.
+  - **prepared-by:** Indicates the organization or person that created this content.
+  - **prepared-for:** Indicates the organization or person for which this content was created.
+  - **content-approver:** Indicates the organization or person responsible for all content represented in the "document".
+  - **contact:** Indicates the organization or person to contact for questions or support related to this content.
+
+  Other roles can be locally defined by the content creator.
+
+- [`locations`](/reference/latest/catalog/json-reference/#/catalog/metadata/locations) - An array of location objects. Geographic data associated with a street, mailing, or email address, or phone number.  Locations have a `uuid` field that allow them to be referenced elsewhere in the OSCAL document. Includes fields to describe a variety of data describing the location in question.
+
+- [`parties`](/reference/latest/catalog/json-reference/#/catalog/metadata/parties) - An array of party objects. Defines some entity, either a person or an organization. Has a `uuid` field that allows for references to this party elsewhere in the OSCAL document. Includes fields to describe a variety of data describing the party in question, including a location uuid.
+
+- [`responsible-parties`](/reference/latest/catalog/json-reference/#/catalog/metadata/responsible-parties) - An array of responsible-party objects. Explicitly declares a party that is responsible for this a given role. The `role-id` field references the role that the party is fulfilling, and is either a custom role locally defined or one of the core-defined roles; see the `roles` section above for details. Uses a party's uuid to link the given role to the given party.
+
+- [`remarks`](/reference/latest/catalog/json-reference/#/catalog/metadata/remarks) - [markup-multiline](/reference/datatypes/#markup-data-types) formatted text providing notes and comments regarding the document.
 {{% /tab %}}
 
 {{% tab %}}
 
 The remainder of this tutorial will briefly cover the other optional objects inside the metadata section. While not required by the specification, these objects provide invaluable information, particularly for provenance and authorship data. This information is declared in the metadata section, and is often passed by-reference to other parts of the OSCAL document. Each object can be clicked to get additional information.
 
-[`roles`](/reference/latest/catalog/json-reference/#/catalog/metadata/roles) - An array of Role objects. Roles define some function or purpose that is to be assigned to some entity later in the document. Role objects have an `id` field with a [NCName](/reference/datatypes/#ncname) that is used to reference the role elsewhere in the OSCAL document. A number of pre-defined roles exist in OSCAL, but differ depending on context. In the metadata section they are as follows:
+- [`roles`](/reference/latest/catalog/json-reference/#/catalog/metadata/roles) - Roles define some function or purpose that is to be assigned to some entity later in the document. Role objects have an `id` field with a [NCName](/reference/datatypes/#ncname) that is used to reference the role elsewhere in the OSCAL document. A number of pre-defined roles exist in OSCAL, but differ depending on context.
 
-- prepared-by: Indicates the organization that created this content.
-- prepared-for: Indicates the organization for which this content was created.
-- content-approver: Indicates the organization responsible for all content represented in the "document".
-Other roles can be locally defined by the content creator.
+  In the metadata section they are as follows:
 
-[`locations`](/reference/latest/catalog/json-reference/#/catalog/metadata/locations) - An array of location objects. Geographic data defined by a street address. Locations have a `uuid` field that allow them to be referenced elsewhere in the OSCAL document. Includes fields to describe a variety of data describing the location in question.
+  - **creator:** Indicates the organization or person that created this content.
+  - **prepared-by:** Indicates the organization or person that created this content.
+  - **prepared-for:** Indicates the organization or person for which this content was created.
+  - **content-approver:** Indicates the organization or person responsible for all content represented in the "document".
+  - **contact:** Indicates the organization or person to contact for questions or support related to this content.
 
-[`parties`](/reference/latest/catalog/json-reference/#/catalog/metadata/parties) - An array of party objects. Defines some entity, either a person or an organization. Has a `uuid` field that allows for references to this party elsewhere in the OSCAL document. Includes fields to describe a variety of data describing the party in question, including a location uuid.
+  Other roles can be locally defined by the content creator.
 
-[`responsible-parties`](/reference/latest/catalog/json-reference/#/catalog/metadata/responsible-parties) - An array of responsible-party objects. Explicitly declares a party that is responsible for this a given role. The `role-id` field references the role that the party is fulfilling, and is either a custom role locally defined or one of the core-defined roles; see the `roles` section above for details. Uses a party's uuid to link the given role to the given party.
+- [`locations`](/reference/latest/catalog/json-reference/#/catalog/metadata/locations) - Geographic data associated with a street, mailing, or email address, or phone number.  Locations have a `uuid` field that allow them to be referenced elsewhere in the OSCAL document. Includes fields to describe a variety of data describing the location in question.
 
-[`remarks`](/reference/latest/catalog/json-reference/#/catalog/metadata/remarks) - [Markup](/reference/datatypes/#markup-data-types) formatted plaintext with notes and remarks regarding the metadata section of this document.
+- [`parties`](/reference/latest/catalog/json-reference/#/catalog/metadata/parties) - Defines some entity, either a person or an organization. Has a `uuid` field that allows for references to this party elsewhere in the OSCAL document. Includes fields to describe a variety of data describing the party in question, including a location uuid.
+
+- [`responsible-parties`](/reference/latest/catalog/json-reference/#/catalog/metadata/responsible-parties) - Explicitly declares a party that is responsible for a given role. The `role-id` field references the role that the party is fulfilling, and is either a custom role locally defined or one of the core-defined roles; see the `role` section above for details. Uses a party's uuid to link the given role to the given party.
+
+- [`remarks`](/reference/latest/catalog/json-reference/#/catalog/metadata/remarks) - [markup-multiline](/reference/datatypes/#markup-data-types) formatted text providing notes and comments regarding the document.
 {{% /tab %}}
-
-{{% tab %}}
-
-The remainder of this tutorial will briefly cover the other optional objects inside the metadata section. While not required by the specification, these objects provide invaluable information, particularly for provenance and authorship data. This information is declared in the metadata section, and is often passed by-reference to other parts of the OSCAL document. Each object can be clicked to get additional information.
-
-[`roles`](/reference/latest/catalog/json-reference/#/catalog/metadata/roles) - Roles define some function or purpose that is to be assigned to some entity later in the document. Role objects have an `id` field with a [NCName](/reference/datatypes/#ncname) that is used to reference the role elsewhere in the OSCAL document. A number of pre-defined roles exist in OSCAL, but differ depending on context. In the metadata section they are as follows:
-
-- prepared-by: Indicates the organization that created this content.
-- prepared-for: Indicates the organization for which this content was created.
-- content-approver: Indicates the organization responsible for all content represented in the "document".
-Other roles can be locally defined by the content creator.
-
-[`locations`](/reference/latest/catalog/json-reference/#/catalog/metadata/locations) - Geographic data defined by a street address. Locations have a `uuid` field that allow them to be referenced elsewhere in the OSCAL document. Includes fields to describe a variety of data describing the location in question.
-
-[`parties`](/reference/latest/catalog/json-reference/#/catalog/metadata/parties) - Defines some entity, either a person or an organization. Has a `uuid` field that allows for references to this party elsewhere in the OSCAL document. Includes fields to describe a variety of data describing the party in question, including a location uuid.
-
-[`responsible-parties`](/reference/latest/catalog/json-reference/#/catalog/metadata/responsible-parties) - Explicitly declares a party that is responsible for a given role. The `role-id` field references the role that the party is fulfilling, and is either a custom role locally defined or one of the core-defined roles; see the `role` section above for details. Uses a party's uuid to link the given role to the given party.
-
-[`remarks`](/reference/latest/catalog/json-reference/#/catalog/metadata/remarks) - [Markup](/reference/datatypes/#markup-data-types) formatted plaintext with notes and remarks regarding the metadata section of this document.
-{{% /tab %}}
-
 {{% /tabs %}}
 
 ## Putting It All Together
@@ -734,23 +719,22 @@ Finally, we have a basic example of an OSCAL metadata section below:
 {{< highlight xml "linenos=table" >}}
 <catalog uuid="c3da6d1d-c20c-4c7c-ae73-4010167a186b">
   <metadata>
-      <title>Example OSCAL Document</title>
-      <published>2021-01-01T00:00:00-5:00</published>
-      <last-modified>2021-01-05T00:00:00-5:00</last-modified>
-      <version>1.0.0</version>
-      <oscal-version>1.0.4</oscal-version>
-      <document-id scheme="https://www.doi.org/">10.1000/182</document-id>
-      <prop name="marking" class="TrafficLightProtocol" value="red"/>
-      <link rel="latest-version"
-        href="https://www.example.com/catalog/example-oscal-catalog/latest"/>
-      <party uuid="15d2e37c-0452-4695-9c6a-ddc1ff15397b" type="organization">
-        <name>Example Company</name>
-      </party>
-      <responsible-party role-id="prepared-by">
-        <party-uuid>15d2e37c-0452-4695-9c6a-ddc1ff15397b</party-uuid>
-      </responsible-party>
+    <title>Example OSCAL Document</title>
+    <published>2021-01-01T00:00:00-5:00</published>
+    <last-modified>2021-01-05T00:00:00-5:00</last-modified>
+    <version>1.0.0</version>
+    <oscal-version>1.0.4</oscal-version>
+    <document-id scheme="http://www.doi.org/">10.1000/182</document-id>
+    <prop name="marking" class="http://www.first.org/tlp" value="red"/>
+    <link rel="latest-version"
+      href="https://www.example.com/catalog/example-oscal-catalog/latest"/>
+    <party uuid="15d2e37c-0452-4695-9c6a-ddc1ff15397b" type="organization">
+      <name>Example Company</name>
+    </party>
+    <responsible-party role-id="prepared-by">
+      <party-uuid>15d2e37c-0452-4695-9c6a-ddc1ff15397b</party-uuid>
+    </responsible-party>
   </metadata>
-  ...
 </catalog>
 {{< /highlight >}}
 {{% /tab %}}
@@ -760,41 +744,41 @@ Finally, we have a basic example of an OSCAL metadata section below:
   "catalog": {
     "uuid": "c3da6d1d-c20c-4c7c-ae73-4010167a186b",
     "metadata": {
-      "title":"Example OSCAL Catalog",
-      "published":"2021-01-01T00:00:00-5:00",
-      "last-modified":"2021-01-05T00:00:00-5:00",
-      "version":"1.0.0",
+      "title": "Example OSCAL Catalog",
+      "published": "2021-01-01T00:00:00-5:00",
+      "last-modified": "2021-01-05T00:00:00-5:00",
+      "version": "1.0.0",
       "oscal-version":"1.0.4",
       "document-ids": [
         {
-        "scheme":"https://www.doi.org/",
-        "value":"10.1000/182"
+          "scheme": "http://www.doi.org/",
+          "value": "10.1000/182"
         }
       ],
       "props": [
         {
-        "name":"marking",
-        "value":"red",
-        "class":"TLP"
+          "name": "marking",
+          "value": "red",
+          "class": "http://www.first.org/tlp"
         }
       ],
       "links": [
         {
-        "rel":"latest-version",
-        "href":"https://www.example.com/catalog/example-oscal-catalog/latest"
+          "rel": "latest-version",
+          "href": "https://www.example.com/catalog/example-oscal-catalog/latest"
         }
       ],
       "parties": [
         {
-          "uuid":"15d2e37c-0452-4695-9c6a-ddc1ff15397b",
-          "type":"organization",
-          "name":"Example Company"
+          "uuid": "15d2e37c-0452-4695-9c6a-ddc1ff15397b",
+          "type": "organization",
+          "name": "Example Company"
         }
       ],
       "responsible-parties":[
         {
-          "role-id":"prepared-by",
-          "party-uuid":"15d2e37c-0452-4695-9c6a-ddc1ff15397b"
+          "role-id": "prepared-by",
+          "party-uuid": "15d2e37c-0452-4695-9c6a-ddc1ff15397b"
         }
       ]
     }
@@ -805,31 +789,31 @@ Finally, we have a basic example of an OSCAL metadata section below:
 {{% tab %}}
 {{< highlight yaml "linenos=table" >}}
 ---
-  catalog:
-    uuid: c3da6d1d-c20c-4c7c-ae73-4010167a186b
-    metadata:
-      title: Example OSCAL Catalog
-      published: 2021-01-01T00:00:00-5:00
-      last-modified: 2021-01-05T00:00:00-5:00
-      version: 1.0.0
-      oscal-version: 1.0.4
-      document-ids:
-      - scheme: https://www.doi.org/
-        value: 10.1000/182
-      props:
-      - name: marking
-        value: red
-        class: TLP
-      links:
-      - rel: latest-version
-        href: https://www.example.com/catalog/example-oscal-catalog/latest
-      parties:
-      - uuid: 15d2e37c-0452-4695-9c6a-ddc1ff15397b
-        type: organization
-        name: Example Company
-      responsible-parties:
-      - role-id: prepared-by
-        party-uuid: 15d2e37c-0452-4695-9c6a-ddc1ff15397b
+catalog:
+  uuid: c3da6d1d-c20c-4c7c-ae73-4010167a186b
+  metadata:
+    title: Example OSCAL Catalog
+    published: 2021-01-01T00:00:00-5:00
+    last-modified: 2021-01-05T00:00:00-5:00
+    version: 1.0.0
+    oscal-version: 1.0.4
+    document-ids:
+    - scheme: http://www.doi.org/
+      value: 10.1000/182
+    props:
+    - name: marking
+      value: red
+      class: http://www.first.org/tlp
+    links:
+    - rel: latest-version
+      href: https://www.example.com/catalog/example-oscal-catalog/latest
+    parties:
+    - uuid: 15d2e37c-0452-4695-9c6a-ddc1ff15397b
+      type: organization
+      name: Example Company
+    responsible-parties:
+    - role-id: prepared-by
+      party-uuid: 15d2e37c-0452-4695-9c6a-ddc1ff15397b
 {{< /highlight >}}
 {{% /tab %}}
 {{% /tabs %}}
